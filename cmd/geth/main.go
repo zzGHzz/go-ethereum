@@ -198,13 +198,13 @@ func init() {
 	app.Commands = []*cli.Command{
 		// See chaincmd.go:
 		// initCommand,
-		importCommand,
-		exportCommand,
+		// importCommand,
+		// exportCommand,
 		// importPreimagesCommand,
 		// exportPreimagesCommand,
-		removedbCommand,
-		dumpCommand,
-		dumpGenesisCommand,
+		// removedbCommand,
+		// dumpCommand,
+		// dumpGenesisCommand,
 
 		// See accountcmd.go:
 		// accountCommand,
@@ -217,20 +217,20 @@ func init() {
 
 		// See misccmd.go:
 		versionCommand,
-		versionCheckCommand,
+		// versionCheckCommand,
 		licenseCommand,
 
 		// See config.go
-		dumpConfigCommand,
+		// dumpConfigCommand,
 
 		// see dbcmd.go
-		dbCommand,
-
+		// dbCommand,
+		//
 		// See cmd/utils/flags_legacy.go
-		utils.ShowDeprecated,
+		// utils.ShowDeprecated,
 
 		// See snapshot.go
-		snapshotCommand,
+		// snapshotCommand,
 
 		// See verkle.go
 		// verkleCommand,
