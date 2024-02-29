@@ -204,42 +204,50 @@ func init() {
 	app.Copyright = "Copyright 2013-2023 The go-ethereum Authors"
 	app.Commands = []*cli.Command{
 		// See chaincmd.go:
-		initCommand,
+		// initCommand,
 		importCommand,
 		exportCommand,
-		importPreimagesCommand,
-		exportPreimagesCommand,
+		// importPreimagesCommand,
+		// exportPreimagesCommand,
 		removedbCommand,
 		dumpCommand,
 		dumpGenesisCommand,
+
 		// See accountcmd.go:
 		accountCommand,
 		walletCommand,
+
 		// See consolecmd.go:
-		consoleCommand,
-		attachCommand,
-		javascriptCommand,
+		// consoleCommand,
+		// attachCommand,
+		// javascriptCommand,
+
 		// See misccmd.go:
 		versionCommand,
 		versionCheckCommand,
 		licenseCommand,
+
 		// See config.go
 		dumpConfigCommand,
+
 		// see dbcmd.go
 		dbCommand,
+
 		// See cmd/utils/flags_legacy.go
 		utils.ShowDeprecated,
+
 		// See snapshot.go
 		snapshotCommand,
+
 		// See verkle.go
-		verkleCommand,
+		// verkleCommand,
 	}
 	sort.Sort(cli.CommandsByName(app.Commands))
 
 	app.Flags = flags.Merge(
 		nodeFlags,
 		rpcFlags,
-		consoleFlags,
+		// consoleFlags,
 		debug.Flags,
 		metricsFlags,
 	)
