@@ -37,7 +37,6 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/eth/ethconfig"
 	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/internal/debug"
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/node"
 	"github.com/ethereum/go-ethereum/rlp"
@@ -96,8 +95,8 @@ func StartNode(ctx *cli.Context, stack *node.Node, isConsole bool) {
 					log.Warn("Already shutting down, interrupt more to panic.", "times", i-1)
 				}
 			}
-			debug.Exit() // ensure trace and CPU profile data is flushed.
-			debug.LoudPanic("boom")
+			// debug.Exit() // ensure trace and CPU profile data is flushed.
+			// debug.LoudPanic("boom")
 		}
 
 		if isConsole {
