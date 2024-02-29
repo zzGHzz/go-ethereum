@@ -33,7 +33,6 @@ import (
 	"github.com/ethereum/go-ethereum/eth"
 	"github.com/ethereum/go-ethereum/eth/downloader"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/ethereum/go-ethereum/internal/debug"
 	"github.com/ethereum/go-ethereum/internal/ethapi"
 	"github.com/ethereum/go-ethereum/internal/flags"
 	"github.com/ethereum/go-ethereum/log"
@@ -248,7 +247,7 @@ func init() {
 		nodeFlags,
 		rpcFlags,
 		// consoleFlags,
-		debug.Flags,
+		// debug.Flags,
 		metricsFlags,
 	)
 	flags.AutoEnvVars(app.Flags, "GETH")
@@ -256,14 +255,14 @@ func init() {
 	app.Before = func(ctx *cli.Context) error {
 		maxprocs.Set() // Automatically set GOMAXPROCS to match Linux container CPU quota.
 		flags.MigrateGlobalFlags(ctx)
-		if err := debug.Setup(ctx); err != nil {
-			return err
-		}
+		// if err := debug.Setup(ctx); err != nil {
+		// 	return err
+		// }
 		flags.CheckEnvVars(ctx, app.Flags, "GETH")
 		return nil
 	}
 	app.After = func(ctx *cli.Context) error {
-		debug.Exit()
+		// debug.Exit()
 		prompt.Stdin.Close() // Resets terminal mode.
 		return nil
 	}
@@ -357,7 +356,7 @@ func geth(ctx *cli.Context) error {
 // it unlocks any requested accounts, and starts the RPC/IPC interfaces and the
 // miner.
 func startNode(ctx *cli.Context, stack *node.Node, backend ethapi.Backend, isConsole bool) {
-	debug.Memsize.Add("node", stack)
+	// debug.Memsize.Add("node", stack)
 
 	// Start up the node itself
 	utils.StartNode(ctx, stack, isConsole)
