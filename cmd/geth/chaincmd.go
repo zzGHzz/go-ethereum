@@ -43,21 +43,21 @@ import (
 )
 
 var (
-	// 	initCommand = &cli.Command{
-	// 		Action:    initGenesis,
-	// 		Name:      "init",
-	// 		Usage:     "Bootstrap and initialize a new genesis block",
-	// 		ArgsUsage: "<genesisPath>",
-	// 		Flags: flags.Merge([]cli.Flag{
-	// 			utils.CachePreimagesFlag,
-	// 		}, utils.DatabaseFlags),
-	// 		Description: `
-	// The init command initializes a new genesis block and definition for the network.
-	// This is a destructive action and changes the network in which you will be
-	// participating.
+	initCommand = &cli.Command{
+		Action:    initGenesis,
+		Name:      "init",
+		Usage:     "Bootstrap and initialize a new genesis block",
+		ArgsUsage: "<genesisPath>",
+		Flags: flags.Merge([]cli.Flag{
+			utils.CachePreimagesFlag,
+		}, utils.DatabaseFlags),
+		Description: `
+The init command initializes a new genesis block and definition for the network.
+This is a destructive action and changes the network in which you will be
+participating.
 
-	// It expects the genesis file as argument.`,
-	// 	}
+It expects the genesis file as argument.`,
+	}
 	dumpGenesisCommand = &cli.Command{
 		Action:    dumpGenesis,
 		Name:      "dumpgenesis",
@@ -121,34 +121,34 @@ last block to write. In this mode, the file will be appended
 if already existing. If the file ends with .gz, the output will
 be gzipped.`,
 	}
-	// 	importPreimagesCommand = &cli.Command{
-	// 		Action:    importPreimages,
-	// 		Name:      "import-preimages",
-	// 		Usage:     "Import the preimage database from an RLP stream",
-	// 		ArgsUsage: "<datafile>",
-	// 		Flags: flags.Merge([]cli.Flag{
-	// 			utils.CacheFlag,
-	// 			utils.SyncModeFlag,
-	// 		}, utils.DatabaseFlags),
-	// 		Description: `
-	// The import-preimages command imports hash preimages from an RLP encoded stream.
-	// It's deprecated, please use "geth db import" instead.
-	// `,
-	// 	}
-	// 	exportPreimagesCommand = &cli.Command{
-	// 		Action:    exportPreimages,
-	// 		Name:      "export-preimages",
-	// 		Usage:     "Export the preimage database into an RLP stream",
-	// 		ArgsUsage: "<dumpfile>",
-	// 		Flags: flags.Merge([]cli.Flag{
-	// 			utils.CacheFlag,
-	// 			utils.SyncModeFlag,
-	// 		}, utils.DatabaseFlags),
-	// 		Description: `
-	// The export-preimages command exports hash preimages to an RLP encoded stream.
-	// It's deprecated, please use "geth db export" instead.
-	// `,
-	// 	}
+	importPreimagesCommand = &cli.Command{
+		Action:    importPreimages,
+		Name:      "import-preimages",
+		Usage:     "Import the preimage database from an RLP stream",
+		ArgsUsage: "<datafile>",
+		Flags: flags.Merge([]cli.Flag{
+			utils.CacheFlag,
+			utils.SyncModeFlag,
+		}, utils.DatabaseFlags),
+		Description: `
+	The import-preimages command imports hash preimages from an RLP encoded stream.
+	It's deprecated, please use "geth db import" instead.
+	`,
+	}
+	exportPreimagesCommand = &cli.Command{
+		Action:    exportPreimages,
+		Name:      "export-preimages",
+		Usage:     "Export the preimage database into an RLP stream",
+		ArgsUsage: "<dumpfile>",
+		Flags: flags.Merge([]cli.Flag{
+			utils.CacheFlag,
+			utils.SyncModeFlag,
+		}, utils.DatabaseFlags),
+		Description: `
+	The export-preimages command exports hash preimages to an RLP encoded stream.
+	It's deprecated, please use "geth db export" instead.
+	`,
+	}
 	dumpCommand = &cli.Command{
 		Action:    dump,
 		Name:      "dump",
@@ -171,46 +171,46 @@ This command dumps out the state for a given block (or latest, if none provided)
 
 // initGenesis will initialise the given JSON format genesis file and writes it as
 // the zero'd block (i.e. genesis) or will fail hard if it can't succeed.
-// func initGenesis(ctx *cli.Context) error {
-// 	if ctx.Args().Len() != 1 {
-// 		utils.Fatalf("need genesis.json file as the only argument")
-// 	}
-// 	genesisPath := ctx.Args().First()
-// 	if len(genesisPath) == 0 {
-// 		utils.Fatalf("invalid path to genesis file")
-// 	}
-// 	file, err := os.Open(genesisPath)
-// 	if err != nil {
-// 		utils.Fatalf("Failed to read genesis file: %v", err)
-// 	}
-// 	defer file.Close()
+func initGenesis(ctx *cli.Context) error {
+	if ctx.Args().Len() != 1 {
+		utils.Fatalf("need genesis.json file as the only argument")
+	}
+	genesisPath := ctx.Args().First()
+	if len(genesisPath) == 0 {
+		utils.Fatalf("invalid path to genesis file")
+	}
+	file, err := os.Open(genesisPath)
+	if err != nil {
+		utils.Fatalf("Failed to read genesis file: %v", err)
+	}
+	defer file.Close()
 
-// 	genesis := new(core.Genesis)
-// 	if err := json.NewDecoder(file).Decode(genesis); err != nil {
-// 		utils.Fatalf("invalid genesis file: %v", err)
-// 	}
-// 	// Open and initialise both full and light databases
-// 	stack, _ := makeConfigNode(ctx)
-// 	defer stack.Close()
+	genesis := new(core.Genesis)
+	if err := json.NewDecoder(file).Decode(genesis); err != nil {
+		utils.Fatalf("invalid genesis file: %v", err)
+	}
+	// Open and initialise both full and light databases
+	stack, _ := makeConfigNode(ctx)
+	defer stack.Close()
 
-// 	for _, name := range []string{"chaindata", "lightchaindata"} {
-// 		chaindb, err := stack.OpenDatabaseWithFreezer(name, 0, 0, ctx.String(utils.AncientFlag.Name), "", false)
-// 		if err != nil {
-// 			utils.Fatalf("Failed to open database: %v", err)
-// 		}
-// 		defer chaindb.Close()
+	for _, name := range []string{"chaindata", "lightchaindata"} {
+		chaindb, err := stack.OpenDatabaseWithFreezer(name, 0, 0, ctx.String(utils.AncientFlag.Name), "", false)
+		if err != nil {
+			utils.Fatalf("Failed to open database: %v", err)
+		}
+		defer chaindb.Close()
 
-// 		triedb := utils.MakeTrieDatabase(ctx, chaindb, ctx.Bool(utils.CachePreimagesFlag.Name), false)
-// 		defer triedb.Close()
+		triedb := utils.MakeTrieDatabase(ctx, chaindb, ctx.Bool(utils.CachePreimagesFlag.Name), false)
+		defer triedb.Close()
 
-// 		_, hash, err := core.SetupGenesisBlock(chaindb, triedb, genesis)
-// 		if err != nil {
-// 			utils.Fatalf("Failed to write genesis block: %v", err)
-// 		}
-// 		log.Info("Successfully wrote genesis state", "database", name, "hash", hash)
-// 	}
-// 	return nil
-// }
+		_, hash, err := core.SetupGenesisBlock(chaindb, triedb, genesis)
+		if err != nil {
+			utils.Fatalf("Failed to write genesis block: %v", err)
+		}
+		log.Info("Successfully wrote genesis state", "database", name, "hash", hash)
+	}
+	return nil
+}
 
 func dumpGenesis(ctx *cli.Context) error {
 	// if there is a testnet preset enabled, dump that
@@ -368,43 +368,43 @@ func exportChain(ctx *cli.Context) error {
 }
 
 // importPreimages imports preimage data from the specified file.
-// func importPreimages(ctx *cli.Context) error {
-// 	if ctx.Args().Len() < 1 {
-// 		utils.Fatalf("This command requires an argument.")
-// 	}
+func importPreimages(ctx *cli.Context) error {
+	if ctx.Args().Len() < 1 {
+		utils.Fatalf("This command requires an argument.")
+	}
 
-// 	stack, _ := makeConfigNode(ctx)
-// 	defer stack.Close()
+	stack, _ := makeConfigNode(ctx)
+	defer stack.Close()
 
-// 	db := utils.MakeChainDatabase(ctx, stack, false)
-// 	defer db.Close()
-// 	start := time.Now()
+	db := utils.MakeChainDatabase(ctx, stack, false)
+	defer db.Close()
+	start := time.Now()
 
-// 	if err := utils.ImportPreimages(db, ctx.Args().First()); err != nil {
-// 		utils.Fatalf("Import error: %v\n", err)
-// 	}
-// 	fmt.Printf("Import done in %v\n", time.Since(start))
-// 	return nil
-// }
+	if err := utils.ImportPreimages(db, ctx.Args().First()); err != nil {
+		utils.Fatalf("Import error: %v\n", err)
+	}
+	fmt.Printf("Import done in %v\n", time.Since(start))
+	return nil
+}
 
-// exportPreimages dumps the preimage data to specified json file in streaming way.
-// func exportPreimages(ctx *cli.Context) error {
-// 	if ctx.Args().Len() < 1 {
-// 		utils.Fatalf("This command requires an argument.")
-// 	}
-// 	stack, _ := makeConfigNode(ctx)
-// 	defer stack.Close()
+// // exportPreimages dumps the preimage data to specified json file in streaming way.
+func exportPreimages(ctx *cli.Context) error {
+	if ctx.Args().Len() < 1 {
+		utils.Fatalf("This command requires an argument.")
+	}
+	stack, _ := makeConfigNode(ctx)
+	defer stack.Close()
 
-// 	db := utils.MakeChainDatabase(ctx, stack, true)
-// 	defer db.Close()
-// 	start := time.Now()
+	db := utils.MakeChainDatabase(ctx, stack, true)
+	defer db.Close()
+	start := time.Now()
 
-// 	if err := utils.ExportPreimages(db, ctx.Args().First()); err != nil {
-// 		utils.Fatalf("Export error: %v\n", err)
-// 	}
-// 	fmt.Printf("Export done in %v\n", time.Since(start))
-// 	return nil
-// }
+	if err := utils.ExportPreimages(db, ctx.Args().First()); err != nil {
+		utils.Fatalf("Export error: %v\n", err)
+	}
+	fmt.Printf("Export done in %v\n", time.Since(start))
+	return nil
+}
 
 func parseDumpConfig(ctx *cli.Context, stack *node.Node) (*state.DumpConfig, ethdb.Database, common.Hash, error) {
 	db := utils.MakeChainDatabase(ctx, stack, true)
