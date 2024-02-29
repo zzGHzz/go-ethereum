@@ -553,21 +553,21 @@ func (srv *Server) setupDiscovery() error {
 	}
 
 	// Start discovery services.
-	if srv.DiscoveryV4 {
-		cfg := discover.Config{
-			PrivateKey:  srv.PrivateKey,
-			NetRestrict: srv.NetRestrict,
-			Bootnodes:   srv.BootstrapNodes,
-			Unhandled:   unhandled,
-			Log:         srv.log,
-		}
-		ntab, err := discover.ListenV4(conn, srv.localnode, cfg)
-		if err != nil {
-			return err
-		}
-		srv.ntab = ntab
-		srv.discmix.AddSource(ntab.RandomNodes())
-	}
+	// if srv.DiscoveryV4 {
+	// 	cfg := discover.Config{
+	// 		PrivateKey:  srv.PrivateKey,
+	// 		NetRestrict: srv.NetRestrict,
+	// 		Bootnodes:   srv.BootstrapNodes,
+	// 		Unhandled:   unhandled,
+	// 		Log:         srv.log,
+	// 	}
+	// 	ntab, err := discover.ListenV4(conn, srv.localnode, cfg)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	srv.ntab = ntab
+	// 	srv.discmix.AddSource(ntab.RandomNodes())
+	// }
 	if srv.DiscoveryV5 {
 		cfg := discover.Config{
 			PrivateKey:  srv.PrivateKey,
