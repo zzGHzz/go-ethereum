@@ -310,18 +310,18 @@ func (s *Ethereum) APIs() []rpc.API {
 			Namespace: "eth",
 			Service:   NewEthereumAPI(s),
 		}, {
-			Namespace: "miner",
-			Service:   NewMinerAPI(s),
-		}, {
+			// 	Namespace: "miner",
+			// 	Service:   NewMinerAPI(s),
+			// }, {
 			Namespace: "eth",
 			Service:   downloader.NewDownloaderAPI(s.handler.downloader, s.eventMux),
 		}, {
-			Namespace: "admin",
-			Service:   NewAdminAPI(s),
-		}, {
-			Namespace: "debug",
-			Service:   NewDebugAPI(s),
-		}, {
+			// 	Namespace: "admin",
+			// 	Service:   NewAdminAPI(s),
+			// }, {
+			// 	Namespace: "debug",
+			// 	Service:   NewDebugAPI(s),
+			// }, {
 			Namespace: "net",
 			Service:   s.netRPCService,
 		},
