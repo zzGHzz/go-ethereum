@@ -511,10 +511,10 @@ func (h *handler) Start(maxPeers int) {
 	h.maxPeers = maxPeers
 
 	// broadcast and announce transactions (only new ones, not resurrected ones)
-	h.wg.Add(1)
-	h.txsCh = make(chan core.NewTxsEvent, txChanSize)
-	h.txsSub = h.txpool.SubscribeTransactions(h.txsCh, false)
-	go h.txBroadcastLoop()
+	// h.wg.Add(1)
+	// h.txsCh = make(chan core.NewTxsEvent, txChanSize)
+	// h.txsSub = h.txpool.SubscribeTransactions(h.txsCh, false)
+	// go h.txBroadcastLoop()
 
 	// broadcast mined blocks
 	h.wg.Add(1)
